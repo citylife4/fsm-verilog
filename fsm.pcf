@@ -1,0 +1,9 @@
+set_io clk 21
+
+set_io k 99
+set_io m 98
+set_io l 97
+
+set_io a 62
+set_io b 61
+set_io c 60

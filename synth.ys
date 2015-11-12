@@ -1,0 +1,9 @@
+read_verilog fsm.v
+show -pause
+proc
+show -pause
+opt_clean
+check
+show -pause
+opt
+show -pause
