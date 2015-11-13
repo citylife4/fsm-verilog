@@ -9,6 +9,10 @@ sim:
 wave:
 	gtkwave $(BUILD_DIR)/$(TOP).vcd
 
+check:
+	mkdir $(BUILD_DIR) -p
+	yosys -p "proc; check" $(TOP).v
+
 synth: $(TOP).v $(TOP).pcf
 	mkdir $(BUILD_DIR) -p
 	yosys -p "synth_ice40 -blif $(BUILD_DIR)/$(TOP).blif" $(TOP).v

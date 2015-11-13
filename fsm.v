@@ -7,31 +7,40 @@ module fsm (input clk, input a, b, c, output k, m, l);
     STATE_ML = 3'b110;
 
   reg [2:0] state;
+  reg [2:0] next_state;
 
-  // next state
-  always @(posedge clk) begin
+  // combinational logic
+  always @* begin
     case (state)
       STATE_IDLE: begin
         if (a && b) begin
-          state <= STATE_ML;
+          next_state = STATE_ML;
         end else if (b) begin
-          state <= STATE_K;
+          next_state = STATE_K;
+        end else begin
+          next_state = state;
         end
       end
       STATE_ML: begin
         if (a && b && c) begin
-          state <= STATE_L;
+          next_state = STATE_L;
         end else if (b && c) begin
-          state <= STATE_M;
+          next_state = STATE_M;
+        end else begin
+          next_state = state;
         end
       end
+      default: next_state = state;
     endcase
   end
 
-  // reset
+  // reset and next state
   always @(posedge clk) begin
-    if (!a && !b && !c)
+    if (!a && !b && !c) begin
       state <= STATE_IDLE;
+    end else begin
+      state <= next_state;
+    end
   end
 
   // output logic
